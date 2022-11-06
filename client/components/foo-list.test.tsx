@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { act, render, screen, waitFor } from '@testing-library/react';
-import fooListFn from './FooList'
+import fooListFn from './foo-list'
 import {afterEach, expect, jest, describe, it} from '@jest/globals'
 
 // TODO: Make mocking sane.
