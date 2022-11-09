@@ -14,8 +14,26 @@ import db from './database.js'
 
 describe('the server', () => {
   // Gracefully shut down the server, otherwise we see a warning from Jest.
-  afterAll(() => {
-    app.close()
+  //
+  // Due to issues described in
+  // https://github.com/visionmedia/supertest/issues/697 Jest will display a
+  // warning about how a worker process failed to exit. Jest is promise aware,
+  // so returning promises will work properly. However supertest is not cleaning
+  // up properly on promise returns. Using an afterAll with
+  // Net.Server.prototype.close doesn't seem to do anything to help. Using it
+  // with afterEach causes subsequent tests to fail. This issue has been at
+  // large for about a year at time of writing, so it might need some external
+  // contributions rather than waiting for the maintainer to get to it.
+  // Additionaly there is a related issue
+  // https://github.com/visionmedia/supertest/issues/634 with a pull request
+  // tied to it https://github.com/visionmedia/supertest/pull/651 which has yet
+  // to be merged.
+  //
+  // I have confirmed that the tests still fail properly if the expectations are
+  // fouled up. So these aren't due to dangling promises that deceptively cause
+  // tests to pass.
+  afterAll((done) => {
+    app.close(done)
   })
 
   it('successfully gets /foos', () => {
