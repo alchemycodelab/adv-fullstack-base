@@ -24,6 +24,10 @@ export default {
     '^(\\.{1,2}/.*)\\.js$': '$1',
   },
   testEnvironment: 'jsdom',
+  testPathIgnorePatterns: [
+    '/node_modules/', // The default, but keep it here since we're overriding.
+    '/dist', // Do not test files we've transpiled.
+  ],
   transform: {
     '^.+\\.tsx?': [ 'ts-jest', { useESM: true } ],
   },
