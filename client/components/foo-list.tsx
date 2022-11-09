@@ -4,14 +4,11 @@ import {
   useState,
   useEffect,
 } from 'react'
+import { type Foo } from '../../common/foo.js'
 
 export type Props = {}
 
 export type Component = FC<Props>
-
-type Foo = {
-  foo: string,
-}
 
 export default (): FC<Props> => {
   const component = (props: Props): ReactElement => {
