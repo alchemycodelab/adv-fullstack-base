@@ -98,12 +98,31 @@ Modules, but this is not an exhaustive feature list.
 
 ### TypeScript
 
-The TypeScript configuration can be found in `tsconfig.json`. This is using
-EcmaScript modules (sometimes called ES6 modules, although the 6 is part is
-inaccurate nowadays). There is significant configuration made to support module
-usage transparently. Modify the area with care: TypeScript does not always catch
-module loading issues immediately, and these will manifest in the runtime
-instead.
+The TypeScript configuration can be found in `tsconfig.json`.
+
+This repository uses a fairly strict TypeScript configuration, with a focus on
+correctness/soundness of code taking precedence over editor hints. You can
+afford to lean heavily on types as something to be true.
+
+This is using EcmaScript modules (sometimes called ES6 modules, although the 6
+is part is inaccurate nowadays). There is significant configuration made to
+support module usage transparently. Modify the area with care: TypeScript does
+not always catch module loading issues immediately, and these will manifest in
+the runtime instead.
+
+There are two major caveats:
+1. All code must be a module. So it must `import` or `export` something. Use
+   `export {}` if you don't really need to export anything. Because these are
+   "modules" in a very strict sense, `import` statements always get hoisted to
+   the top. This means you can't `import` something, run a function, and then
+   `import` another thing which depends on that function being run. It doesn't
+   come up much, but it can be surprising when it does.
+2. All TypeScript imports must end in `.js`. Tickets like
+   https://github.com/microsoft/TypeScript/issues/49083 outline the arguments
+   and counter arguments about it, and there's other long winded tickets on the
+   same topic. TypeScript has made their decision to stick with `.js` though,
+   even though it seems to fly in the face of module standards. Don't expect
+   this will change anytime soon.
 
 ### CSS Modules
 
