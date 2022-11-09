@@ -1,4 +1,5 @@
 import express, { type Request, type Response } from 'express'
+import fooController from './foos.js'
 
 const app = express()
 
@@ -7,9 +8,7 @@ const server = app.listen(parseInt(process.env.APP_PORT || '7890'), () => {
 })
 
 // Think of the poor foos.
-app.get('/foos', (req: Request, res: Response) => {
-  res.send([ { foo: 'bar' } ])
-})
+app.use('/foos', fooController)
 
 app.all('*', (req: Request, res: Response) => {
   console.log(`404 for ${req.url}`)

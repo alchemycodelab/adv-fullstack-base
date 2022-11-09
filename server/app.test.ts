@@ -10,6 +10,7 @@ import {
   it,
   jest,
 } from '@jest/globals'
+import db from './database.js'
 
 describe('the server', () => {
   // Gracefully shut down the server, otherwise we see a warning from Jest.
@@ -24,6 +25,13 @@ describe('the server', () => {
   })
 
   it('serves a list of foos on GET /foos', () => {
+    jest.spyOn(db, 'query').mockImplementation(
+        jest.fn(() => {
+          return Promise.resolve({
+            rows: [{foo: 'bar'}],
+          })
+        }),
+    )
     return request(app)
       .get('/foos')
       .then((res) => {

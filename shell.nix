@@ -16,7 +16,7 @@ stdenv.mkDerivation {
       alias scripts='jq ".scripts" package.json'
       function postgres-start {
         echo 'If this fails, you may need to kill postgres processes and run again.'
-        pg_ctl -D .tmp/$USER -l logfile -o "--unix_socket_directories='$PWD'" start
+        pg_ctl -D .tmp/$USER -l logfile start
       }
       function postgres-create {
         initdb .tmp/$USER
