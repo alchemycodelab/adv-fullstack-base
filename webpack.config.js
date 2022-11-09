@@ -13,16 +13,20 @@ import { fileURLToPath } from 'url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
+// There can be a lot of environment variables, and many of them private. We
+// want a way to inject configuration via environment variables into the UI at
+// build time. List variables here to ensure they are included.
+const includeEnvironmentVariables = [
+]
 // Part of a series of settings to allow use of process.env in the web. See also
 // the resolve -> alias setting in this file, the ProvidePlugin usage in this
 // file, and the added process package.
-const env = Object.entries({
-  ...dotenv.config(),
-  ...process.env,
-}).reduce((acc, [key, value]) => {
-  acc[key] = value;
-  return acc;
-}, {});
+const env = Object.fromEntries(
+  Object.entries({
+    ...dotenv.config(),
+    ...process.env,
+  }).filter(([k, _v]) => includeEnvironmentVariables.includes(k)),
+)
 
 export default {
   entry: './client/app.tsx',
@@ -46,6 +50,12 @@ export default {
   plugins: [
     new HtmlPlugin({ template: './client/index.html' }),
     new CleanWebpackPlugin(),
+    // This provides the environment variable data to Webpack. This environment
+    // variable data comes from the environment variables themselves, plus the
+    // .env file (with environment variables winning conflicts). To make this
+    // completely work, see the resolve.alias section as well as the
+    // ProvidePlugin in this plugin section, and finally the environment
+    // processing code above this configuration in this file.
     new webpack.EnvironmentPlugin(env),
     new CopyPlugin({
       patterns: [{ from: 'public' }],
