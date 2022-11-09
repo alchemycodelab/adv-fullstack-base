@@ -3,6 +3,7 @@ import CopyPlugin from 'copy-webpack-plugin'
 import HtmlPlugin from 'html-webpack-plugin'
 import autoprefixer from 'autoprefixer'
 import dotenv from 'dotenv'
+import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import path from 'node:path'
 import postcssImport from 'postcss-import'
 import postcssNested from 'postcss-nested'
@@ -49,6 +50,10 @@ export default {
     new CopyPlugin({
       patterns: [{ from: 'public' }],
     }),
+    // This extracts CSS data and puts it into a CSS file, which is then
+    // included in our index.html. The gathering of the CSS data is done via the
+    // plugin's loader, which can be seen in the rules section below for CSS.
+    new MiniCssExtractPlugin(),
     // Bring this in to allow use of process.env in the web. See also the
     // resolve -> alias setting in this file, dotenv usage in this file, and
     // the added process package.
@@ -78,9 +83,12 @@ export default {
       {
         test: /\.css$/,
         use: [
-          {
-            loader: 'style-loader',
-          },
+          // css-loader lets us import css files. MiniCssExtractPlugin takes the
+          // CSS data and stuffs it into a css file for us. That file is then
+          // later included in our index.html by the same plugin employed in the
+          // plugins section. This plugin must be the last in order in order to
+          // work correctly (and thus needs to be on the top).
+          MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
             options: {
