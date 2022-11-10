@@ -36,8 +36,8 @@ export default {
   entry: './client/app.tsx',
   // This indicates how and where the final output is bundled.
   output: {
-    filename: 'bundle.[hash].js',
-    path: path.resolve(__dirname, './dist'),
+    filename: 'bundle.[contenthash].js',
+    path: path.resolve(__dirname, './public'),
     publicPath: '/',
   },
   // The webpack-dev-server is what we run locally when npm start is invoked. It
@@ -66,6 +66,8 @@ export default {
       '/api/v1': {
         pathRewrite: {
           // This rewritres the /api/v1 (coming from the browser) to nothing.
+          // See API_PREFIX. When deployed, we set API_PREFIX to be /api/v1, but
+          // if the API were ever to be versioned, we'd set it to /api/v2.
           '^/api/v1': ''
         },
         // This is our server that we want to reverse-proxy to.
@@ -100,7 +102,7 @@ export default {
     // know how to include them. For these files, place them in the public
     // directory and Webpack will ensure they get copied over.
     new CopyPlugin({
-      patterns: [{ from: 'public' }],
+      patterns: [{ from: 'client/public' }],
     }),
     // This extracts CSS data and puts it into a CSS file, which is then
     // included in our index.html. The gathering of the CSS data is done via the
