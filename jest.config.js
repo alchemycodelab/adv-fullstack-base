@@ -1,6 +1,6 @@
 /** @type {import('ts-jest').JestConfigWithTsJest} */
 export default {
-  extensionsToTreatAsEsm: ['.ts'],
+  extensionsToTreatAsEsm: ['.ts', '.tsx'],
   preset: 'ts-jest',
   setupFiles: ['dotenv/config', './setup-tests.js'],
   setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect'],
@@ -27,6 +27,7 @@ export default {
   testPathIgnorePatterns: [
     '/node_modules/', // The default, but keep it here since we're overriding.
     '/dist', // Do not test files we've transpiled.
+    '/public', // Do not test files we've transpiled.
   ],
   transform: {
     '^.+\\.tsx?': [ 'ts-jest', { useESM: true } ],

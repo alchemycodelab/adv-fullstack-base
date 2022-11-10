@@ -30,6 +30,7 @@
     "strictPropertyInitialization": true,
     "target": "es2022",
     "types": [
+      "jest",
       "react",
       "react-dom/experimental",
       "react-dom/next",
