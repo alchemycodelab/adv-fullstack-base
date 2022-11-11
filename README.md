@@ -1,9 +1,9 @@
 # Base!
 
-This engineer left the template readme in place, and did not document their
-project with a simple readme.
+This is a readme template! This should be swapped out with some documentation
+about the application itself.
 
-## Recommended for Forks
+## Recommended First Repo Steps
 
 For forks of this repository, it's recommended to move this file aside
 (suggested to a `base.md`) and flesh out your own `README.md`. All repositories
