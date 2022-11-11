@@ -1,21 +1,21 @@
+/*******************************************************************************
+ * All general routes are handled in this file - all routes agnostic of the API
+ * itself. This includes global middleware, general handlers (like 404 and error
+ * handling) as well as static asset hosting.
+ *
+ * For routes for your API, see routes.ts.
+ ******************************************************************************/
+
 import dotenv from 'dotenv'
 import express, { type Request, type Response } from 'express'
 import path from 'node:path'
-import fooController from './foos.js'
+import routes from './routes.js'
 
 dotenv.config()
 
 const app = express()
 
-const server = app.listen(parseInt(process.env.PORT || '7890'), () => {
-  console.log('Started server on ', server.address())
-})
-
-const prefixRouter = express.Router()
-// Think of the poor foos.
-prefixRouter.use('/foos', fooController)
-
-app.use(process.env.API_PREFIX || '', prefixRouter)
+app.use(process.env.API_PREFIX || '', routes())
 // Ordinarily we'd use __dirname as a base directory, but issues that arise from
 // https://github.com/kulshekhar/ts-jest/issues/1174 cause problems with not
 // being able to use import.meta.url (our module equivalent of __dirname). Our
@@ -32,5 +32,4 @@ app.all('*', (req: Request, res: Response) => {
   res.status(404).sendFile(path.join(publicDir, 'index.html'))
 })
 
-export default server
-
+export default app
