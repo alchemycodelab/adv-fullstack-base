@@ -10,6 +10,7 @@
     "lint": "eslint --ext js --ext jsx src",
     "setup-db": "ts-node --esm setup-db.ts",
     "start": "npm-run-all --parallel start:server start:web",
+    "start:production": "node dist/server/index.js",
     "start:server": "ts-node --esm server/app.ts",
     "start:web": "webpack serve --hot --mode development --devtool eval-source-map",
     "start:web:watch": "npm run start",
