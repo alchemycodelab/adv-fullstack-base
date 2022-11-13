@@ -1,6 +1,6 @@
 import { type Express, type Request, type Response, Router } from 'express'
-import db from './database.js'
-import { type Foo } from '../common/foo.js'
+import db from '../database.js'
+import { type Foo } from '../../common/foo.js'
 import { type QueryResult } from 'pg'
 
 

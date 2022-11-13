@@ -1,7 +1,7 @@
 // Note the mismatch of import name and library name. This follows the
 // documentation example.
 import request from 'supertest'
-import app from './app'
+import app from '../app'
 import {
   describe,
   expect,
