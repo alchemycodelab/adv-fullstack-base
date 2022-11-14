@@ -18,6 +18,8 @@
     "strictPropertyInitialization": true,
     "target": "es2022",
     "types": [
+      "@testing-library/jest-dom",
+      "@types/testing-library__jest-dom",
       "jest",
       "react",
       "react-dom/experimental",

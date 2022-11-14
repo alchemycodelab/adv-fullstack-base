@@ -7,8 +7,13 @@ import {
   expect,
   it,
 } from '@jest/globals'
+import setupDb from '../setup-data.js'
 
-describe('the server', () => {
+describe('foos controller', () => {
+  beforeEach(() => {
+    setupDb()
+  })
+
   it('successfully gets /foos', () => {
     return request(app)
       .get('/foos')

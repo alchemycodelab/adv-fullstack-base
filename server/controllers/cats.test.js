@@ -8,19 +8,24 @@ import {
   expect,
   it,
 } from '@jest/globals'
+import setupDb from '../setup-data.js'
 
 describe('the server', () => {
-  it('successfully gets /foos', () => {
+  beforeEach(() => {
+    setupDb()
+  })
+
+  it('successfully gets /cats', () => {
     return request(app)
-      .get('/foos')
+      .get('/cats')
       .then(res => expect(res.status).toBe(200))
   })
 
-  it('serves a list of foos on GET /foos', () => {
+  it('serves a list of cats on GET /cats', () => {
     return request(app)
-      .get('/foos')
+      .get('/cats')
       .then((res) => {
-        expect(res.body[0]).toEqual({id: '1', foo: 'bar'})
+        expect(res.body[0]).toEqual({id: '1', name: 'Atonic'})
       })
   })
 })
