@@ -4,7 +4,7 @@
  ******************************************************************************/
 
 import { Router } from 'express'
-import db from './database.js'
+import db from '../database.js'
 
 export default Router()
   .get('/', (req, res) => {

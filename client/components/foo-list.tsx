@@ -33,6 +33,6 @@ export default (): FC<Props> => {
       return <span>Loading Foos!</span>
     }
   }
-  component.displayName = 'Foolist'
+  component.displayName = 'FooList'
   return component
 }
