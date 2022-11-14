@@ -17,6 +17,69 @@ describe('FooList', () => {
     jest.clearAllMocks()
   })
 
+  it('displays multiple foos on /foos', async () => {
+    mockFetch(200, [{id: 0, foo: 'bar'}, {id: '1', foo: 'qux'}])
+    const FooList = fooListFn()
+    act(() => {
+      render(<FooList/>)
+    })
+    await waitFor(() => {
+      const el = screen.getByTestId('foo-1')
+      expect(el.textContent).toEqual('qux')
+    })
+  })
+
+  it('can edit a foo name (edit mode)', async () => {
+    mockFetch(200, [{id: '0', foo: 'bar'}])
+    const FooList = fooListFn()
+    await act(async () => {
+      render(<FooList/>)
+    })
+    await act(() => {
+      const editButton = screen.getByTestId('foo-edit-0')
+      fireEvent(
+        editButton,
+        new MouseEvent('click', {
+          bubbles: true,
+          cancelable: true,
+        }),
+      )
+    })
+    await waitFor(async () => {
+      const editTextField = screen.getByTestId<HTMLInputElement>('foo-edit-text-0')
+      expect(editTextField.value).toEqual('bar')
+    })
+  })
+
+  it.only('can edit a foo name (edit text)', async () => {
+    mockFetch(200, [{id: '0', foo: 'bar'}])
+    const FooList = fooListFn()
+    await act(async () => {
+      render(<FooList/>)
+    })
+    await act(() => {
+      const editButton = screen.getByTestId('foo-edit-0')
+      fireEvent(
+        editButton,
+        new MouseEvent('click', {
+          bubbles: true,
+          cancelable: true,
+        }),
+      )
+    })
+    await act(() => {
+      const editTextField = screen.getByTestId<HTMLInputElement>('foo-edit-text-0')
+      fireEvent.change(
+        editTextField,
+        { target: { value: 'new name' } },
+      )
+    })
+    await waitFor(async () => {
+      const editTextField = screen.getByTestId<HTMLInputElement>('foo-edit-text-0')
+      expect(editTextField.value).toEqual('new name')
+    })
+  })
+
   it('displays a list of foos from a request', async () => {
     mockFetch(200, [{id: 0, foo: 'bar'}])
     const FooList = fooListFn()

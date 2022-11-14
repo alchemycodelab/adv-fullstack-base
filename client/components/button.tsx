@@ -8,7 +8,7 @@ import {
 export type Props = {
   children: ReactNode,
   dataTestId?: string,
-  onClick: ReactEventHandler<HTMLButtonElement>,
+  onClick?: ReactEventHandler<HTMLButtonElement>,
 }
 
 export type Component = FC<Props>
