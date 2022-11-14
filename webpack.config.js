@@ -84,7 +84,11 @@ export default {
     // own HTML file so we can do things like control what meta tags exist, how
     // the body tag is populated, the title, and anything else we might want to
     // control.
-    new HtmlPlugin({ template: './client/index.html' }),
+    new HtmlPlugin({
+      // This is required to make the CSS reload on change.
+      cache: false,
+      template: './client/index.html',
+    }),
     // Clean the dist directory on every webpack build. Note that the dist
     // directory is not used when running webpack-dev-server (npm start).
     new CleanWebpackPlugin(),

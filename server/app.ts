@@ -15,7 +15,7 @@ import errorHandler from './middleware/error.js'
 dotenv.config()
 
 const app = express()
-
+app.use(express.json())
 app.use(process.env.API_PREFIX || '', routes())
 // Ordinarily we'd use __dirname as a base directory, but issues that arise from
 // https://github.com/kulshekhar/ts-jest/issues/1174 cause problems with not
