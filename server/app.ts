@@ -10,6 +10,7 @@ import dotenv from 'dotenv'
 import express, { type Request, type Response } from 'express'
 import path from 'node:path'
 import routes from './routes.js'
+import errorHandler from './middleware/error.js'
 
 dotenv.config()
 
@@ -24,6 +25,7 @@ app.use(process.env.API_PREFIX || '', routes())
 // enough since we control the deployment context.
 const publicDir = path.join(process.cwd(), 'public')
 app.use(express.static(publicDir))
+app.use(errorHandler)
 
 // Sending our index.html to the client on a 404 is required to make HTML5
 // routes. HTML5 routes are the routes using the paths instead of the
