@@ -34,6 +34,7 @@ export default {
   // All Webpack bundles require a single entry point from which the entire
   // bundling process starts.
   entry: './client/app.tsx',
+  mode: process.env.NODE === 'production' ? 'production' : 'development',
   // This indicates how and where the final output is bundled.
   output: {
     filename: 'bundle.[contenthash].js',
@@ -115,6 +116,10 @@ export default {
       process: 'process/browser',
       React: 'react',
     }),
+    // Prevent Webpack from rebuilding when the css.d.ts files are written out.
+    new webpack.WatchIgnorePlugin({
+      paths: [/css\.d\.ts$/],
+    }),
   ],
   resolve: {
     alias: {
@@ -151,6 +156,13 @@ export default {
           // plugins section. This plugin must be the last in order in order to
           // work correctly (and thus needs to be on the top).
           MiniCssExtractPlugin.loader,
+          // This loader makes CSS Modules type safe with TypeScript files.
+          {
+            loader: 'css-modules-typescript-loader',
+            options: {
+              mode: process.env.CI ? 'verify' : 'emit'
+            },
+          },
           {
             loader: 'css-loader',
             options: {
@@ -160,6 +172,7 @@ export default {
               // letting us pretend that CSS files are actually standalone
               // modules that don't interfere with other modules.
               modules: {
+                exportLocalsConvention: 'camelCase',
                 // The localIdentName provides a template in which the class
                 // names are mangled by CSS Modules. By default it is just a
                 // random hash. Below, we use the file name ([name]) and the
