@@ -4,6 +4,8 @@ import {
   useState,
   useEffect,
 } from 'react'
+import listItemFn from './list-item'
+import listItemStyles from './list-item.module.css'
 import { type Foo } from '../../common/foo.js'
 
 export type Props = {}
@@ -11,6 +13,7 @@ export type Props = {}
 export type Component = FC<Props>
 
 export default (): FC<Props> => {
+  const ListItem = listItemFn(listItemStyles.foo)
   const component = (props: Props): ReactElement => {
     // Simply accepting the type we get from the server is inherently dangerous,
     // but for the simplicity of the example we will forego validation.
@@ -21,10 +24,13 @@ export default (): FC<Props> => {
         return res.json().then(res.status < 400 ? setFoos : setError)
       })
     }, [])
+    console.log('foos', foos)
     if(foos.length > 0) {
       return <ul>
         {foos.map((foo, i) => {
-          return <li key={i} data-testid={'foo-' + i}>{foo.foo}</li>
+          return <ListItem key={i}>
+            <span data-testid={'foo-' + i}>{foo.foo}</span>
+          </ListItem>
         })}
       </ul>
     } else if(error != null) {

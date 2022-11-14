@@ -1,6 +1,6 @@
 /** @type {import('ts-jest').JestConfigWithTsJest} */
 export default {
-  extensionsToTreatAsEsm: ['.ts', '.tsx'],
+  extensionsToTreatAsEsm: ['.jsx', '.ts', '.tsx'],
   preset: 'ts-jest',
   setupFiles: ['dotenv/config', './setup-tests.js'],
   setupFilesAfterEnv: [
@@ -34,5 +34,6 @@ export default {
   ],
   transform: {
     '^.+\\.tsx?': [ 'ts-jest', { useESM: true } ],
+    '^.+\\.jsx?': 'babel-jest',
   },
 }
