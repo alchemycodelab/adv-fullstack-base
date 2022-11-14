@@ -1,0 +1,4 @@
+.removeListItem {
+  color: var(--danger-button-color);
+  background-color: var(--danger-button-background-color);
+}
