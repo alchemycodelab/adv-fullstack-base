@@ -138,6 +138,13 @@ export default {
     // assets. When a list of loaders is provided, the assets will move through
     // the loaders in a bottom-to-top order.
     rules: [
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+        },
+      },
       // TypeScript support. See also the resolve.extensions section for
       // including them by file type.
       {
