@@ -11,7 +11,7 @@ import setupDb from '../setup-data.js'
 
 describe('foos controller', () => {
   beforeEach(() => {
-    setupDb()
+    return setupDb()
   })
 
   it('successfully gets /foos', () => {
