@@ -12,7 +12,7 @@ import setupDb from '../setup-data.js'
 
 describe('the server', () => {
   beforeEach(() => {
-    setupDb()
+    return setupDb()
   })
 
   it('successfully gets /cats', () => {
